@@ -12,7 +12,8 @@ export const todoService = {
     getById,
     save,
     remove,
-    getEmptyTodo
+    getEmptyTodo,
+    getEmptyFilter
 }
 
 
@@ -39,6 +40,10 @@ function getEmptyTodo() {
     return {
         txt: '', isDone: false, createdAt: Date.now()
     }
+}
+
+function getEmptyFilter() {
+    return { txt: '', isDone: '' }
 }
 
 function _createTodo() {

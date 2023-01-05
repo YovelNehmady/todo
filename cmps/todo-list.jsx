@@ -1,9 +1,12 @@
 import { TodoPreview } from "./todo-preview.jsx"
 
 
-export function TodoList () {
+export function TodoList({ todos }) {
     return <section className="todo-list">
-        hello from todo list
-        <TodoPreview />
+        
+        <ul>
+
+            {todos.map(todo => <li key={todo._id}><TodoPreview todo={todo} /></li>)}
+        </ul>
     </section>
 }

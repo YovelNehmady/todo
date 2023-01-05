@@ -1,5 +1,6 @@
-export function TodoPreview(){
-    return <section className="todo-preview">
-        hello from todo preview
-    </section>
+export function TodoPreview({todo}){
+    return <article className="todo-preview">
+        <h3>{todo.txt}</h3>
+        <small>{todo.createdAt}</small>
+    </article>
 }

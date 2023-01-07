@@ -8,11 +8,12 @@ import { TodoList } from "../cmps/todo-list.jsx"
 import { addTodo, loadTodos, removeTodo } from "../store/todo.action.js"
 
 export function TodoApp() {
+    const filterBy = useSelector((storeState) => storeState.filterBy)
     const todos = useSelector((storeState) => storeState.todos)
 
     useEffect(() => {
-        loadTodos()
-    }, [])
+        loadTodos(filterBy)
+    }, [filterBy])
 
     function onAddTodo(todo) {
         addTodo(todo)

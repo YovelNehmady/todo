@@ -1,22 +1,26 @@
-import { SET_FILTER } from "../store/store.js"
-
 const { useSelector, useDispatch } = ReactRedux
+const { useState, useEffect } = React
+
+import { todoService } from "../services/todo.service.js"
+import { SET_FILTER, SET_FILTER_BY_ISDONE, SET_FILTER_BY_TXT } from "../store/store.js"
+
 
 
 export function TodoFilter() {
-    const filterBy = useSelector((storeState) => storeState.filterBy)
+    const [filter, setFilter] = useState(todoService.getEmptyFilter())
     const dispatch = useDispatch()
 
     function onSubmit(ev) {
         ev.preventDefault()
+        dispatch({ type: SET_FILTER, filter })
+        setFilter(todoService.getEmptyFilter())
     }
-    
+
     function handleChange({ target }) {
         const { name, value } = target
-
-        dispatch({ type: SET_FILTER, [name]: value  })
+        setFilter((prevFulter) => { return { ...prevFulter, [name]: value } })
     }
-    
+
 
     return <section className="todo-filter">
         <form onSubmit={onSubmit}>
@@ -25,14 +29,16 @@ export function TodoFilter() {
                 id="txt"
                 placeholder="Search todo..."
                 onChange={handleChange}
-                value={filterBy.txt} />
+                value={filter.txt} />
 
-            <select onChange={handleChange} value={filterBy.isDone}
+            <select onChange={handleChange} value={filter.isDone}
                 type="select" name="isDone" id="isDone">
-                <option value="">All</option>
+                <option value="undefined">All</option>
                 <option value="true">Done</option>
                 <option value="false">Active</option>
             </select>
+
+            <button>Search</button>
         </form>
     </section>
 }

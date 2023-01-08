@@ -5,12 +5,10 @@ export const SET_TODOS = 'SET_TODOS'
 export const ADD_TODO = 'ADD_TODO'
 export const REMOVE_TODO = 'REMOVE_TODO'
 export const SET_FILTER = 'SET_FILTER'
-// export const SET_FILTER_BY_TXT = 'SET_FILTER_BY_TXT'
-// export const SET_FILTER_BY_ISDONE = 'SET_FILTER_BY_ISDONE'
 
 const initialState = {
     todos: [],
-    filterBy: [],
+    filterBy: todoService.getEmptyFilter(),
     user: null
     // user: userService.getLoggedinUser()
 }
@@ -33,9 +31,10 @@ function appReducer(state = initialState, action) {
 
         //_FILTER
         case SET_FILTER:
-            filterBy = [ action.filter]
-            console.log(filterBy);
-            return { ...state, filterBy }
+            return { ...state, filterBy: action.filterBy }
+
+        //_USER
+
 
         default:
             return { ...state }

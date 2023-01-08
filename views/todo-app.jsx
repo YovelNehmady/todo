@@ -28,6 +28,7 @@ export function TodoApp() {
     }
 
     return <section className="todo-index">
+        
         <TodoFilter />
         <AddTodo onAddTodo={onAddTodo} />
         <TodoList todos={todos} onRemoveTodo={onRemoveTodo} />

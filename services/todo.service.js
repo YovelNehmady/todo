@@ -17,29 +17,25 @@ export const todoService = {
 }
 
 function query(filterBy) {
-    if (!filterBy || !filterBy.length) return storageService.query(STORAGE_KEY)
-    else {
-        if (filterBy[0].txt) {
-            console.log(filterBy[0].txt)
-            const regex = new RegExp(filterBy[0].txt, 'i')
-            return storageService.query(STORAGE_KEY)
-                .then(todos => todos.filter(todo => regex.test(todo.txt)))
-        }
+    if (!filterBy.txt && !filterBy.isDone) return storageService.query(STORAGE_KEY)
 
-        if (filterBy[0].isDone !== undefined) {
-            if (filterBy[0].isDone) return storageService.query(STORAGE_KEY)
-                .then(todos => todos.filter(todo => todo.isDone)).then(todos => {
-                    console.log(todos)
-                    return todos
-                })
-
-            if (!filterBy[0].isDone) return storageService.query(STORAGE_KEY)
-                .then(todos => todos.filter(todo => !todo.isDone)).then(todos => {
-                    console.log(todos)
-                    return todos
-                })
-        }
+    if (filterBy.txt) {
+        const regex = new RegExp(filterBy.txt, 'i')
+        return storageService.query(STORAGE_KEY)
+            .then(todos => todos.filter(todo => regex.test(todo.txt)))
     }
+
+    if (filterBy.isDone !== undefined) {
+        if (filterBy.isDone === 'true') return storageService.query(STORAGE_KEY)
+            .then(todos => todos.filter(todo => todo.isDone)).then(todos => todos)
+
+        if (filterBy.isDone === 'false') return storageService.query(STORAGE_KEY)
+            .then(todos => todos.filter(todo => !todo.isDone)).then(todos => todos)
+
+        if (filterBy.isDone === 'undefined') return storageService.query(STORAGE_KEY)
+            .then(todos => todos)
+    }
+
 }
 
 function getById(todoId) {
